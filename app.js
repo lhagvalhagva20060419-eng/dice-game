@@ -8,11 +8,15 @@ var scores;
 var roundScore;
 // shoog shideh event listener
 var diceNumber=Math.floor(Math.random()*6)+1;
+
+var isGameOver; 
+
 initGame();
 
 function initGame(){
     //toglogchiin eeljiig hadgalah huvisagch,negdugeer toglogch  , 2r toglogch 1
-activePlayer=0;
+isGameOver=false;
+    activePlayer=0;
 //toglogchiin onoog tsugluulah huvisagch
 scores=[0,0];
 
@@ -41,6 +45,7 @@ document.querySelector(".player-0-panel").classList.add("active");
 }
 
 document.querySelector(".btn-roll").addEventListener('click',function(){
+if(! isGameOver){
 var diceNumber=Math.floor(Math.random()*6)+1;   
 diceDom.style.display="block";
 diceDom.src="dice-"+diceNumber+".png";
@@ -53,14 +58,17 @@ document.getElementById("current-"+activePlayer).textContent=roundScore;
 document.getElementById("current-"+activePlayer).textContent=0;
 switchToNextPlayer();
 }
+}
 });
 
 // hold tovchnii listener
 document.querySelector(".btn-hold").addEventListener("click",function(){
+    if(! isGameOver){
     scores[activePlayer]+=roundScore;
 
     document.getElementById("score-"+activePlayer).textContent=scores[activePlayer];
     if(scores[activePlayer]>=10){
+        isGameOver=true;
         document.getElementById("name-"+activePlayer).textContent= "WINNER!!!";
         document.querySelector(".player-"+activePlayer+"-panel").classList.add("winner");
         document.querySelector(".player-"+activePlayer+"-panel").classList.remove("active");
@@ -69,6 +77,8 @@ document.querySelector(".btn-hold").addEventListener("click",function(){
      document.getElementById("current-"+activePlayer).textContent=0;
     switchToNextPlayer();
     }
+    }
+
 });
 
 function switchToNextPlayer(){
