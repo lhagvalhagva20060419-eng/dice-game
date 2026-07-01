@@ -1,5 +1,5 @@
 //toglogchiin eeljiig hadgalah huvisagch,negdugeer toglogch  , 2r toglogch 1
-var activePlayer=1;
+var activePlayer=0;
 //toglogchiin onoog tsugluulah huvisagch
 var scores=[0,0];
 
@@ -15,10 +15,27 @@ document.getElementById("current-1").textContent='0';
 
 var diceDom=document.querySelector(".dice");
 diceDom.style.display="none";
+// shoog shideh event listener
 document.querySelector(".btn-roll").addEventListener('click',function(){
-    var diceNumber=Math.floor(Math.random()*6)+1;   
+var diceNumber=Math.floor(Math.random()*6)+1;   
 diceDom.style.display="block";
 diceDom.src="dice-"+diceNumber+".png";
+
+// Buusan too ni 1 ees yalgaatai bol glogchiin eeljiin onoog oorchloh
+if(diceNumber!==1){
+roundScore+=diceNumber;
+document.getElementById("current-"+activePlayer).textContent=roundScore;
+}else{
+document.getElementById("current-"+activePlayer).textContent=0;
+(activePlayer===0) ? activePlayer=1 : activePlayer=0;
+roundScore=0;
+
+diceDom.style.display="none";
+
+document.querySelector(".player-"+(1-activePlayer)+"-panel").classList.remove("active");
+document.querySelector(".player-"+activePlayer+"-panel").classList.add("active");
+
+}
 });
 
 
